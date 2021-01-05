@@ -1,4 +1,5 @@
 'use strict';
+
 function getDogImage(breed) {
   fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
     .then(response => response.json())
@@ -10,7 +11,7 @@ function getDogImage(breed) {
 function displayResults(responseJson) {
   console.log(responseJson);
   $('.results-img').replaceWith(
-    `<img src="${responseJson.message}" class="results-img">`
+    `<img src="${responseJson.message}" class="results-img">`)
   $('.results').removeClass('hidden');
 }
 
