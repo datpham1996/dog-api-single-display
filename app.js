@@ -1,24 +1,27 @@
-'use strict'
-
-function getDogs(dogBreed) {
-  const url = 'https://dog.ceo/api/breed/' + dogBreed + '/images/random'
-  fetch(url)
+'use strict';
+function getDogImage(breed) {
+  fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
     .then(response => response.json())
-    .then(responseJson => displayDogSearchData(responseJson))
-    .catch(error => 'Something went wrong. Try again later.');
-};
+    .then(responseJson => 
+      displayResults(responseJson))
+    .catch(error => alert('Something went wrong. Try again later.'));
+}
 
-function listenToInput(event) {
+function displayResults(responseJson) {
+  console.log(responseJson);
+  $('.results-img').replaceWith(
+    `<img src="${responseJson.message}" class="results-img">`
+  $('.results').removeClass('hidden');
+}
+
+function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    let dogBreed = $('option').val();
-    getDogs(dogBreed);
+    getDogImage($('#breed').val());
   });
 }
 
-function displayDogSearchData(responseJson) {
-  console.log(responseJson)
-  $('.js-image').html(`<img src="${responseJson.message}" class="dog-image" alt="Random Dog Picture">`);
-  };
-
-$(listenToInput);
+$(function() {
+  console.log('App loaded! Waiting for submit!');
+  watchForm();
+});
